@@ -1,0 +1,50 @@
+from turtle import Screen, Turtle
+POSITIONS = [(0, 0), (-20, 0), (-40, 0)]
+MOVE_DISTANCE = 20
+
+
+class Snake:
+    def __init__(self):
+        self.sequence = []
+        self.create_snake()
+
+    def create_snake(self):
+        for i in POSITIONS:
+            self.add_segment(i)
+
+    def add_segment(self, position):
+        new_turtle = Turtle("square")
+        new_turtle.color("white")
+        new_turtle.penup()
+        new_turtle.setpos(position)
+        self.sequence.append(new_turtle)
+
+    def reset(self):
+        for y in self.sequence:
+            y.goto(1000, 1000)
+        self.sequence.clear()
+        self.create_snake()
+
+    def extends(self):
+        self.add_segment(self.sequence[-1].position())
+
+    def move(self):
+        for i in range(len(self.sequence) - 1, 0, -1):
+            self.sequence[i].goto(self.sequence[i - 1].xcor(), self.sequence[i - 1].ycor())
+        self.sequence[0].forward(MOVE_DISTANCE)
+
+    def up(self):
+        if self.sequence[0].heading() != 270:
+            self.sequence[0].setheading(90)
+
+    def down(self):
+        if self.sequence[0].heading() != 90:
+           self.sequence[0].setheading(270)
+
+    def left(self):
+        if self.sequence[0].heading() != 0:
+            self.sequence[0].setheading(180)
+
+    def right(self):
+        if self.sequence[0].heading != 180:
+            self.sequence[0].setheading(0)
