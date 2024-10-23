@@ -1,0 +1,34 @@
+from turtle import Turtle
+
+class Scoreboard(Turtle):
+
+    def __init__(self):
+        super().__init__()
+        self.penup()
+        self.hideturtle()
+        self.color("white")
+        self.points = 0
+        file = open("test.txt")
+        self.high_score = file.read()
+        file.close()
+        self.goto(0, 270)
+        self.updated()
+
+    def updated(self):
+        self.clear()
+        self.write(f"Score: {self.points} High Score: {self.high_score}", align="center", font=("Arial", 16, "normal"))
+        self.points += 1
+
+    def reset_board(self):
+
+        if self.points > int(self.high_score):
+            f = open("test.txt", "w")
+            self.high_score =  self.points
+            f.write(str(self.points))
+            f.close()
+        self.points = 0
+        self.updated()
+
+    # def end(self):
+    #     self.goto(0, 0)
+    #     self.write("Game Over", align="center", font=("Arial", 24, "normal"))
